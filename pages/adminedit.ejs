@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Supply</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.936);
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.865);
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+      width: 500px;
+      z-index: 2;
+      position: relative;
+    }
+    textarea {
+      resize: vertical;
+    }
+
+
+    h1 {
+      
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;
+    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:60px;
+      z-index: 1; /* Ensure the h1 overlays the image */
+    }
+  
+    h4 {
+      text-align: center;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    form label {
+        display: block;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form textarea,
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-sizing: border-box; /* Include padding and border in the width */
+    }
+
+
+    button[type="submit"] {
+      
+      background-color: #000000;
+      color: #fff;
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #06060698;
+    }
+
+    .go-back-link {
+      text-align: center;
+        font-size: 14px;
+        color: #888;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .go-back-link:hover {
+        text-decoration: underline;
+    }
+    </style>
+
+</head>
+
+<body>
+  <div class="container">
+  <h1>Bienvenue à Fest'Event.</h1>
+  <h4>Edit your existing supply</h4>
+  <form method="POST" action="/edit/<%= supply.id %>" id="supplyForm" >
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="<%= supply.name %>">
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description"><%= supply.description %></textarea>
+
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" value="<%= supply.category %>">
+
+    <label for="sub_category">Subcategory:</label>
+    <input type="text" id="sub_category" name="sub_category" value="<%= supply.sub_category %>">
+
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" value="<%= supply.country %>">
+
+    <label for="region">Region:</label>
+    <input type="text" id="region" name="region" value="<%= supply.region %>">
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" value="<%= supply.city %>">
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" value="<%= supply.quantity %>">
+
+    <label for="rate">Rate:</label>
+    <input type="number" id="rate" name="rate" step="0.01" value="<%= supply.rate %>">
+
+    <button type="submit" id="updateButton">Update</button>
+  </form>
+  <div class="go-back-link">
+    <a class="go-back-link" href="/admin">Retour.</a>
+    </div>
+</div>
+  
+  
+</div>
+<script>
+  const updateButton = document.getElementById("updateButton");
+  const supplyForm = document.getElementById("supplyForm");
+
+  updateButton.addEventListener("click", function () {
+    // Submit the form to update supply details
+    supplyForm.submit();
+
+    // Redirect to the /admin page
+    window.location.href = "/admin";
+  });
+</script>
+  </script>
+</body>
+</html>

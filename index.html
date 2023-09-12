@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<title>Fest'Event</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+
+	<link rel="stylesheet" type="text/css" href="design.css">
+	
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+  <div class="w3-row w3-padding w3-black">
+    <div class="w3-col s3">
+      <a href="#a propos" class="w3-button w3-block w3-black">A PROPOS</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#prestations" class="w3-button w3-block w3-black">PRESTATIONS</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#portfolio" class="w3-button w3-block w3-black">PORTFOLIO</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#contact" class="w3-button w3-block w3-black">CONTACT</a>  
+    </div>
+    <div class="w3-col s3">
+      <a href="/login" class="w3-button w3-block w3-black" >LOGIN</a>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">Ouvert tous les jours</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-black" style="font-size:100px"><br> Fest'Event</span>
+  </div>
+  <div class="w3-display-bottomright w3-center w3-padding-large">
+    <span class="w3-tag">5 rue Lemaignan - Paris 14e</span>
+  </div>
+</header>
+
+
+<!-- Add a background color and large text to the whole page -->
+
+<body>
+
+<!-- A propos de l'agence -->
+<div class="w3-container" id="a propos">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">A PROPOS DE L'AGENCE</span></h5>
+    <p><center>Je me présente, je suis Kelly, jeune organisatrice d’événements et directrice de l’agence Fest’event. Fondée en 2018, l’agence Fest’event organise tous types d’événements, du plus intimiste au plus fou ! </center></p>
+    
+    <p><center>Je mets tout mon savoir faire, mon expérience et mon précieux carnet d’adresse à votre service pour organiser, dessiner et mettre en place l’événement qui vous ressemble ! </center></p>
+ 
+	<br> </br> 
+    
+
+    <div class="container">
+		<div class="absolute">
+			<img src="Images/Admin1.jpg" alt="Kelly" class="image">
+		
+			<div class="overlay">
+				<div class="text">
+					<p>Diplomée en communication marketing</p>
+                    <p>Wedding Planner & Designer</p>
+					<p>21 Ans</p>
+					<p>Célibataire</p>
+					<p>Paris, Ile de France</i></p>
+				</div>	
+			</div>
+		</div>
+	</div>
+    
+
+    <div class="w3-panel w3-leftbar w3-light-grey">
+    </div>
+    <p><strong><center>Heures d'ouverture:</strong> Tous les jours de 9h à 18h.</center></p>
+    <p><strong><center>Adresse:</strong> 5 rue Lemaignan - Paris 14e</center></p>
+  </div>
+</div>
+
+
+
+
+<!-- Prestations -->
+<div class="w3-container" id="prestations">
+  <div class="w3-content" style="max-width:700px">
+ 
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PRESTATIONS</span></h5>
+  
+    <div class="w3-row w3-center w3-card w3-padding">
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Wedding_Planner');" id="myLink">
+        <div class="w3-col s4 tablink">Wedding Planner</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Wedding_Designer');" id="myLink">
+        <div class="w3-col s4 tablink">Wedding Designer</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Autres_Prestations');" id="myLink">
+        <div class="w3-col s4 tablink">Autres Prestations</div>
+      </a>
+    </div>
+
+    <div id="Wedding_Planner" class="w3-container menu w3-padding-48 w3-card">
+      <center>
+      <h5>Ticket Gold</h5>
+      <p class="w3-text-grey">Organisation de votre mariage de A à Z. <br> Ne vous prenez plus la tête, Fest'Event se charge de tout !</p><br>
+    
+      <h5>Ticket Argent</h5>
+      <p class="w3-text-grey">Organisation de votre mariage dans sa partiellité. <br> Fest'Event vous seconde dans vos préparations !</p><br>
+    
+      <h5>Ticket Simple</h5>
+      <p class="w3-text-grey">Organisation de votre mariage à la carte. <br> Vous choississez et on s'en occupe !</p><br>
+      
+      <p> Pour plus d'informations sur les prestations et les tarifs, cliquez ci-dessous !</p>
+     
+      <br><p><button class="w3-button w3-black" type="submit">Je découvre</button></p>
+     
+      </center>
+    </div>
+
+
+    <div id="Wedding_Designer" class="w3-container menu w3-padding-48 w3-card">
+      <center>
+      <h5>COACHING</h5>
+		<p class="w3-text-grey">
+		• Rendez-vous 1 <br>
+			Faire connaissance, identifier vos besoins.<br>
+		• Rendez-vous 2 à l’atelier <br>
+			Présentation des éléments graphiques & de la scénographie. <br>
+		•Remise d’une shopping liste. <br>
+		• Suivi à distance <br>
+		</p><br>	
+    
+      <h5>STYLE SUR MESURE</h5>
+      <p class="w3-text-grey">
+		• Rendez-vous 1 <br>
+		• Rendez-vous 2 <br>
+			Présentation des éléments graphiques & validation du concept. <br>
+		• Rendez-vous 3 <br>
+			Simulation scénographique <br>
+		• PACK PAPETERIE <br>
+			Par table : 2 menus, marques places, 1 support nom de table, le plan de table. <br>
+		• DÉCORATION DES TABLES <br>
+			1 centre de table floral, verreries & bougies. <br>
+		• Aménagement du coin livre d’or, urne <br>
+		• Installation Jour J & désinstallation. <br>
+		</p><br>
+    
+      <h5>BIG DREAM</h5>
+      <p class="w3-text-grey">
+		Rêvez votre décoration en grand ! <br>
+		Tout commence par l’étude de votre projet et une visite du lieu de réception. <br>
+		Ensemble définissons une ambiance harmonieuse. <br>
+		Au fil des rendez-vous, je vous guide sur tous les détails pratiques, techniques et esthétiques de votre décoration. <br>
+		Je réalise vos envies, qu’elles soient originales ou traditionnelles. <br>
+		Faisons pétiller les yeux de vos invités. <br>
+      
+      
+      
+      <br><p><button class="w3-button w3-black" type="submit">Je découvre</button></p>
+     
+      </center>
+	</div>
+
+
+	<div id="Autres_Prestations" class="w3-container menu w3-padding-48 w3-card">
+      <center>
+      <h5>EVJF / EVG</h5>
+      <p class="w3-text-grey">Préparation de votre enterrement de vie de jeune fille / jeune garçon comme vous ne l'avez jamais fait ! <br> Ne vous prenez plus la tête, Fest'Event se charge de tout !</p><br>
+      
+      <h5>Anniversaires</h5>
+      <p class="w3-text-grey">Organisation d'anniversaires (tout théme, toute ambiance...) <br> Donnez nous votre dress code ou le thème et on en fait notre affaire !</p><br>
+      
+      <h5>Baby Event</h5>
+      <p class="w3-text-grey">Pourquoi les baby's n'auraient pas le droit à leur événement ?! <br> Si vous n'avez pas le temps de vous en occuper, laissez nous gérer !</p><br>
+      
+      <p> Pour plus d'informations sur les prestations et les tarifs, cliquez ci-dessous ! </p>
+	 
+      <br><p><button class="w3-button w3-black" type="submit">Je découvre</button></p>
+
+      </center>
+      </div>
+
+	</div>
+</div>
+
+
+
+<!-- Portfolio -->
+<div class="w3-container" id="portfolio" style="padding-bottom:32px;">
+	<div class="w3-content" style="max-width:700px">
+		<h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PORTFOLIO</span></h5>
+		
+        <p><center>Découvrez toutes nos prestations en photos</center></p>
+	</div>    
+    
+</div>
+
+<div class="slides">
+	<div class=slideshow>
+		<input name="slideshow" id=slide_img1 type="radio" class=slide>
+		<input name="slideshow" id=slide_img2 type="radio" class=slide>
+		<input name="slideshow" id=slide_img3 type="radio" class=slide>
+		<input name="slideshow" id=slide_img4 type="radio" class=slide>
+		<input name="slideshow" id=play_img1 type="radio" checked>
+		<input name="slideshow" id=pause_img1 type="radio" class=pause>
+		<input name="slideshow" id=pause_img2 type="radio" class=pause>
+		<input name="slideshow" id=pause_img3 type="radio" class=pause>
+		<input name="slideshow" id=pause_img4 type="radio" class=pause>
+	<ul>
+	<img class=cache src="Images/Admin1.jpg">
+	<li class=img1> 
+		<img src="Images/Admin1.jpg">
+	</li>
+	<li class=img2>
+		<img src="Images/Admin1.jpg">
+	</li>
+	<li class=img3>
+		<img src="Images/Admin1.jpg">
+	</li>
+	<li class=img4>
+		<img src="Images/Admin1.jpg">
+	</li>
+	</ul>
+	<div class=play_pause>
+		<label class=play for=play_img1>
+		</label> 
+		<label class="pause img1" for=pause_img1></label>
+		<label class="pause img2" for=pause_img2></label>
+		<label class="pause img3" for=pause_img3></label>
+		<label class="pause img4" for=pause_img4></label>
+	</div>
+	<div class=precedent>
+		<label class=img1 for=slide_img1></label>
+		<label class=img2 for=slide_img2></label>
+		<label class=img3 for=slide_img3></label>
+		<label class=img4 for=slide_img4></label>
+	</div>
+	<div class=suivant> 
+		<label class=img1 for=slide_img1></label>
+		<label class=img2 for=slide_img2></label>
+		<label class=img3 for=slide_img3></label>
+		<label class=img4 for=slide_img4></label>
+	</div> 
+	<div class=puces>
+		<label class=img1 for=slide_img1>
+		<span class=actif_puces></span></label>
+		<label class=img2 for=slide_img2><span class=actif_puces></span></label>
+		<label class=img3 for=slide_img3><span class=actif_puces></span></label>
+		<label class=img4 for=slide_img4><span class=actif_puces></span></label>
+	</div> 
+	</div>
+	</div>
+
+   
+   
+<!-- Contact -->
+<div class="w3-container" id="contact" style="padding-bottom:32px;">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-48">
+		<span class="w3-tag w3-wide">CONTACT</span>
+	</h5>  
+      
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.7637322470764!2d2.3386966154421835!3d48.824569279284184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671a296c7c295%3A0x1eede0ee9c0516c5!2s5+Rue+Lemaignan%2C+75014+Paris!5e0!3m2!1sfr!2sfr!4v1529570065687" width="100%" height="400px" frameborder="0" style="border:0" allowfullscreen>
+</iframe>
+   
+
+    <p><strong><center>Pour prendre Rendez-Vous</strong> veuillez me laisser vos coordonnées : </center></p>
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nom" required name="Nom"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Prénom" required name="Préno"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="number" placeholder="Date du mariage" required name="Date du mariage"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="number" placeholder="Rendez-vous souhaité" required name="Rendez-vous souhaité"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Message / Indications" required name="Message / Indications"></p>
+      <p><button class="w3-button w3-black" type="submit">ENVOYER MESSAGE</button></p>
+    </form>
+  </div>
+</div>
+
+<!-- End page content -->
+</div>
+
+
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+  <p>Produit par Kelly Meoli</p> 
+  <a href="https://www.instagram.com/kelly_meoli/" title="Instagram"><img src="Images/Instagram.png" width="50" height="50" alt="Resaux sociaux"></a>
+  <a href="https://www.facebook.com/kelly.meoli" title="Facebook"><img src="Images/Facebook.png" width="50" height="50" alt="Resaux sociaux"></a>
+  <a href="+33616265953" title="Téléphone"><img src="Images/Telephone.png" width="50" height="50" alt="Resaux sociaux"></a>
+
+
+</footer>
+
+<script>
+
+// Tabbed Menu
+function openMenu(evt, menuName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("menu");
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+     tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(menuName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+}
+document.getElementById("myLink").click();
+
+</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supply Images</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.slideshow-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.image-number {
+  font-size: 18px;
+  color: #333;
+}
+
+.image-container {
+  display: none;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #fff; /* Add a border to images for a classy look */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a shadow to images */
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+}
+
+.prev:hover,
+.next:hover {
+  color: #555;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+  </style>
+</head>
+<body>
+  <div class="slideshow-container">
+  <p class="image-number">1 / <%= images.length %></p>
+  <% for (const img of images) { %>
+    <div class="image-container">
+      <img src="data:image/jpeg;base64, <%= img.image_data.toString('base64') %>" alt="Image">
+    </div>
+  <% } %>
+  <a class="prev" onclick="changeImage(-1)">❮</a>
+  <a class="next" onclick="changeImage(1)">❯</a>
+</div>
+<button onclick="goBack()">Retour</button>
+
+<script>
+
+function goBack() {
+      window.history.back();
+    }
+  let currentImageIndex = 0;
+
+  function showImage(index) {
+    const images = document.querySelectorAll(".image-container");
+    const imageNumber = document.querySelector(".image-number");
+
+    images[currentImageIndex].style.display = "none";
+    currentImageIndex = (index + images.length) % images.length;
+    images[currentImageIndex].style.display = "block";
+
+    imageNumber.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  }
+
+  function changeImage(n) {
+    showImage(currentImageIndex + n);
+  }
+
+  // Show the first image by default
+  showImage(currentImageIndex);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fest'Event</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f6f6f6;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #555;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #777;
+      margin: 5px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f9f9f9;
+    }
+    .total {
+      font-weight: bold;
+      border-top: 2px solid #333;
+    }
+    .net-amount {
+      text-align: right;
+      margin-top: 20px;
+    }
+    strong {
+      font-weight: bold;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <h1>Fest'Event</h1>
+
+    <h2>Client Information</h2>
+    <p><strong>First Name:</strong> <%= client.firstname %></p>
+    <p><strong>Last Name:</strong> <%= client.lastname %></p>
+    <p><strong>Email:</strong> <%= client.email %></p>
+    <p><strong>Contact Number:</strong> <%= client.contact_number %></p>
+    
+
+    <!-- Display event details -->
+    <h2>Event Details</h2>
+    <p><strong>Date:</strong> <%= formatDate(event.event_start_date) %> - <%= formatDate(event.event_end_date) %></p>
+    <p><strong>Start Time:</strong> <%= event.event_start_time %></p>
+    <p><strong>End Time:</strong> <%= event.event_end_time %></p>
+    <p><strong>Description:</strong> <%= event.event_description %></p>
+
+
+    <!-- Display supplies and quantities -->
+    <h2>Supplies Used</h2>
+    <table>
+      <tr>
+        <th>Supply Name</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total Price</th>
+      </tr>
+      <% if (supplies && supplies.length > 0) { %>
+        <% supplies.forEach(function(supply) { %>
+        <tr>
+          <td><%= supply.name %></td>
+          <td><%= supply.quantity_used %></td>
+          <td>€<%= supply.rate.toFixed(2) %></td>
+          <td>€<%= supply.total_price.toFixed(2) %></td>
+        </tr>
+      <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="4">No supplies found for this event</td>
+        </tr>
+      <% } %>
+      <tr class="total">
+        <td colspan="3">Total Amount</td>
+        <td>€<%= calculateTotalAmount(supplies).toFixed(2) %></td>
+      </tr>
+    </table>
+
+    <!-- Display discount -->
+    
+    <p><strong>Discount Amount:</strong> €<%= discount.toFixed(2) %></p>
+
+    <!-- Display final price -->
+    <div class="net-amount">
+      <p><strong>Net Amount:</strong> €<%= (calculateTotalAmount(supplies) - discount).toFixed(2) %></p>
+    </div>
+    <script>
+
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+         const queryParams = new URLSearchParams(window.location.search);
+      const clientData = JSON.parse(decodeURIComponent(queryParams.get('client')));
+      const eventData = JSON.parse(decodeURIComponent(queryParams.get('event')));
+      const suppliesData = JSON.parse(decodeURIComponent(queryParams.get('supplies')));
+      const discount = parseFloat(decodeURIComponent(queryParams.get('discount')));
+
+      // Populate event details
+      document.getElementById('eventDate').textContent = eventData.event_date;
+      document.getElementById('eventStartTime').textContent = eventData.event_start_time;
+      document.getElementById('eventEndTime').textContent = eventData.event_end_time;
+      document.getElementById('eventDescription').textContent = eventData.event_description;
+
+      // Populate supplies table using JavaScript
+      const suppliesTable = document.querySelector('table');
+      suppliesData.forEach(supply => {
+        const row = suppliesTable.insertRow();
+        row.innerHTML = `
+          <td>${supply.name}</td>
+          <td>${supply.quantity}</td>
+          <td>$${supply.rate.toFixed(2)}</td>
+          <td>$${supply.total_price.toFixed(2)}</td>
+        `;
+      });
+
+      
+    </script>
+  </div>
+</body>
+</html>

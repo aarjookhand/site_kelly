@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Client History</title>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; /* Center the background image */
+    }
+
+
+
+    .container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    margin: 0 auto; /* Center-align the container horizontally */
+    }
+    .user-info {
+    margin-top: 20px;
+    }
+
+    .user-info h2 {
+        text-align: center;
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .user-info ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .user-info li {
+        margin-bottom: 5px;
+    }
+
+    .user-info strong {
+        font-weight: bold;
+    }
+
+    h1 {
+      
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;
+    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:60px;
+      z-index: 1; /* Ensure the h1 overlays the image */
+    }
+  
+    h4 {
+      text-align: center;
+        font-size: 20px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #4b170a;
+      font-weight: bold;
+    }
+
+/* Style for the pop-up form overlay */
+.form-overlay {
+  display: none; /* Initially hide the overlay */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Set the overlay to cover the entire viewport width */
+  height: 100%; /* Set the overlay to cover the entire viewport height */
+  background-color: rgba(0, 0, 0, 0.873);
+  z-index: 1000;
+}
+
+/* Styling for the form container */
+.form-container {
+  background-color: #f9f9f9;
+  padding: 50px; /* Adjust the padding as needed */
+  width: 400px; /* Adjust the maximum width as needed */
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: absolute; /* Use absolute positioning relative to the viewport */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%);
+}
+
+  form input[type="time"],
+  form input[type="date"],
+  form textarea,
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-sizing: border-box; /* Include padding and border in the width */
+    }
+
+/* Styles for the close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000000;
+}
+
+textarea {
+  resize: vertical;
+}
+
+
+  /* Style for the form header */
+  #addFormContainer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+ /* Center-align form labels */
+#addFormContainer label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin: 15px auto; /* Center the labels horizontally */
+  text-align: left; /* Left-align label text */
+}
+
+/* Center-align form inputs */
+#addFormContainer input[type="text"],
+#addFormContainer input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 auto 20px; /* Center the inputs horizontally and create some space below */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+/* Center-align submit button */
+#addFormContainer button[type="submit"] {
+  background-color: #000000;
+  color: #fff;
+  width: 50%; /* Adjust button width as needed */
+  margin: 0 auto; /* Center the button horizontally */
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Style for the submit button on hover */
+#addFormContainer button[type="submit"]:hover {
+  background-color: #06060698;
+}
+
+.go-back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.go-back-link a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #888;
+    transition: text-decoration 0.3s;
+}
+
+.go-back-link a:hover {
+    text-decoration: underline;
+}
+ 
+
+    /* Style for the container */
+.options-container {
+    margin-top: 20px;
+}
+
+.options-list {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.option-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.option-button:hover {
+    background-color: #06060698;
+}
+
+button[type="submit"] {
+      
+      background-color: #000000;
+      color: #fff;
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #06060698;
+    }
+
+
+   
+ </style>
+
+</head>
+<body>
+ 
+  <div class="container">
+    <h1 >Bienvenue à Fest'Event.</h1>
+  <h4>Historique du client</h4>
+
+  
+  <div class="user-info">
+    <h2>Informations de l'utilisateur</h2>
+    <ul>
+      
+      <li>Nom de famille: <strong><%= user.lastname %></strong> </li>
+      <li>Prénom: <strong><%= user.firstname %></strong> </li>
+      <li>Adresse: <%= user.address %></li>
+      <li>Email: <%= user.email %></li>
+      <li>Numéro de contact: <%= user.contact_number %></li>
+    </ul>
+</div>
+
+
+  <div class="options-list">
+    <p><a class="option-button" href="/client/history/<%= user.id %>/events">Mes événements</a></p>
+    <p><a class="option-button" onclick="openAddForm()" type="submit">Ajouter un nouvel événement</a></p> 
+  </div>
+  <div class="go-back-link">
+    <a class="go-back-link" href="/clients">Retour</a>
+  </div>
+
+  <!-- Pop-up form for adding a new event -->
+  <div class="form-overlay" id="addFormOverlay" style="display: none;">
+    
+    <div class="form-container">
+      <div>
+        <span class="close-button" onclick="closeAddForm()">&times;</span>
+      
+      <h4>Ajouter un nouvel événement</h4>
+      <form method="POST" action="/client/history/<%= user.id %>/add-event"><br>
+        <label for="eventStartDate">Date de début :</label><br>
+        <input type="date" id="eventStartDate" name="eventStartDate" required><br>
+        <label for="startTime">Heure de début :</label><br>
+        <input type="time" id="startTime" name="startTime" required><br>
+        <label for="eventEndDate">Date de fin :</label><br>
+        <input type="date" id="eventEndDate" name="eventEndDate" required><br>
+        <label for="endTime">Heure de fin :</label><br>
+        <input type="time" id="endTime" name="endTime"required><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        <button type="submit">Ajouter</button><br> 
+     
+    
+    </form>
+      </div>
+  </div>
+  </div>
+  </div>
+
+  <script>
+    function openAddForm() {
+      document.getElementById("addFormOverlay").style.display = "block";
+    }
+
+    function closeAddForm() {
+      document.getElementById("addFormOverlay").style.display = "none";
+    }
+
+
+
+
+    
+  </script>
+  
+</body>
+</html>

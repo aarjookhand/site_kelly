@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event History</title>
+  <style>
+  body {
+    background-image: url('../images/bg1.jpg');
+    background-size: cover; /* Adjust the background size as needed */
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    display: flex;
+    font-family: Arial, sans-serif;
+
+    margin: 0;
+    padding: 0;
+    
+  }
+    .container {
+ 
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff; /* Container background color */
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Container shadow */
+    }
+    h1 {
+      
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;
+    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:60px;
+      z-index: 1; /* Ensure the h1 overlays the image */
+    }
+
+    h4 {
+      text-align: center;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #ffffffe6; /* Table header background color */
+    }
+
+
+
+    tr:hover {
+      background-color: #e0e0e0; /* Hover row background color */
+    }
+
+    .go-back-link {
+      text-align: center;
+        font-size: 14px;
+        color: #888;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .go-back-link:hover {
+        text-decoration: underline;
+    }
+/* Style for button links */
+.button-link {
+  display: inline-block;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 5px 0;
+  cursor: pointer;
+  width: 150px; /* Set a fixed width for all buttons */
+}
+
+.button-link:hover {
+  background-color: #00000076;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 >Bienvenue à Fest'Event.</h1>
+  <h4>Événements historiques</h4>
+  <table>
+    <tr>
+      <th>Début de l'événement</th>
+      <th>Fin de l'événement.</th>
+      <th>Description</th>
+      <th>Statut</th>
+      <th>Action</th>
+    </tr>
+    <% events.forEach(function(event) { %>
+      <tr>
+        <td>
+          <%= formatDate(event.event_start_date) %> <%= event.event_start_time %>
+        </td>
+        <td>
+          <%= formatDate(event.event_end_date) %> <%= event.event_end_time %>
+        </td>
+        <td><%= event.event_description %></td>
+        <td><%= getEventStatus(event) %></td>
+        <td>
+          <% if (getEventStatus(event)) { %>
+            <a class="button-link" href="/viewusedsupplies/<%= event.id %>">Voir les fournitures</a><br>
+            <a class="button-link" href="/viewbill/<%= event.id %>">Voir la facture</a><br>
+          <% } if (getEventStatus(event) !== "Terminé") { %>
+            <a class="button-link" href="/addinsupplies/<%= event.id %>">Ajouter des fournitures</a><br>
+            <a class="button-link" href="/previewbill/<%= event.id %>">Prévisualiser la facture</a><br>
+          <% } %>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+  
+  
+  <div class="go-back-link">
+    <button class="go-back-link" onclick="goToClientHistory()">Retour</button>
+  </div>
+  
+  </div>
+  </body>
+
+  <script>
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
+
+
+
+
+
+    function goToClientHistory() {
+            window.history.back(); // This function goes back to the previous page in the browser history
+        }
+
+    function getEventStatus(event) {
+      const currentDate = new Date();
+      const eventStartDate = new Date(event.event_start_date);
+      const eventEndDate = new Date(event.event_end_date);
+
+      const currentDateFull = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+      const eventStartDateFull = new Date(eventStartDate.getFullYear(), eventStartDate.getMonth(), eventStartDate.getDate());
+      const eventEndDateFull = new Date(eventEndDate.getFullYear(), eventEndDate.getMonth(), eventEndDate.getDate());
+
+      if (currentDateFull > eventEndDateFull) {
+        return "Terminé";
+      } else if (currentDateFull >= eventStartDateFull && currentDateFull <= eventEndDateFull) {
+        return "En cours";
+      } else {
+        return "À venir";
+      }
+    }
+
+
+
+
+    function performAction(eventId) {
+    // Redirect to the viewsupplies page with the eventId as a query parameter
+    window.location.href = `/viewsupplies?eventid=${eventId}`;
+    }
+  </script>
+</body>
+</html>

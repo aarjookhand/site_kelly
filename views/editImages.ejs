@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Images</title>
+
+</head>
+<body>
+  <div class="container">
+    
+    
+    <!-- editImage.ejs -->
+<form action="/updateImage/<%= image.id %>" method="POST" enctype="multipart/form-data">
+  <!-- Display existing images -->
+  <% for (const img of images) { %>
+    <div class="image-container">
+      <img src="data:image/jpeg;base64, <%= img.image_data.toString('base64') %>" alt="Image">
+      <button type="submit" name="action" value="delete" class="delete-button">Delete</button>
+    </div>
+  <% } %>
+
+  <!-- Add input for uploading new images -->
+  <input type="file" name="newImages" multiple>
+  
+  <!-- Add a button to update the images -->
+  <button type="submit" name="action" value="update" class="update-button">Update Images</button>
+</form>
+
+
+   
+  </div>
+</body>
+</html>
+
+
+
+

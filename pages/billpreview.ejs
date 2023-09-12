@@ -1,0 +1,247 @@
+<% function calculateTotalAmount(supplies) {
+    return supplies.reduce((total, supply) => total + supply.total_price, 0);
+  } %>
+  
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Bill Preview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 10;
+      padding: 0;
+    }
+    
+    .container {
+      width: 210mm; /* A4 width */
+      height: 297mm; /* A4 height */
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header {
+      text-align: left;
+      
+    }
+    
+    .event-details {
+      text-align: right;
+      margin-top: -60px; /* Adjust this margin as needed to align with the top right */
+    }
+
+    
+    h1 {
+          
+          text-align: center;
+          color: #000000;
+          padding: 20px 0;
+        
+          margin: 0;
+          font-family: "Brush Script MT", "Brush Script Std", cursive;
+          font-size:70px;
+          z-index: 1; /* Ensure the h1 overlays the image */
+        }
+    h2 {
+      font-size: 18px;
+      color: #555;
+      margin-top: 20px;
+    }
+    
+    p {
+      font-size: 18px;
+      color: #555;
+      margin: 5px 0;
+    }
+    .client-info {
+      font-size: 24px; /* Adjust the font size as needed */
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      color: #444;
+    }
+    
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    #totalAmount {
+      font-weight: bold;
+    }
+    
+    .go-back-link {
+      display: block;
+      text-align: center;
+      font-size: 16px;
+      color: #000000;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    
+    .go-back-link:hover {
+      text-decoration: underline;
+    }
+    
+    
+    
+      </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Fest'Event</h1>
+        
+          <p class="client-info">
+          <span class="client-firstname"><%= client.firstname %></span>
+          <strong><span class="client-lastname"><%= client.lastname.toUpperCase() %></span></strong>
+          </p>
+        
+            <p >
+             Email : <%= client.email %>
+            </p>
+            <p >
+              Numéro de contact : <%= client.contact_number %>
+            </p>
+          </div>
+    
+   <!-- Display event details -->
+   <div class="event-details">
+    <h2>Détails de l'Événement</h2>
+    <p>Date:<strong> <%= formatDate(event.event_start_date) %> - <%= formatDate(event.event_end_date) %></strong></p>
+    <p>Heure de Début :<strong><%= event.event_start_time %></strong></p>
+    <p>Heure de Fin :<strong><%= event.event_end_time %></strong></p>
+    <p>Description: <strong><%= event.event_description %></strong></p>
+  </div>
+    
+    
+    <!-- Display supplies and quantities -->
+    <table>
+        <tr>
+          <th>Nom de la Fourniture</th>
+          <th>Quantité</th>
+          <th>Prix Unitaire</th>
+          <th>Prix Total</th>
+        </tr>
+        <% if (supplies && supplies.length > 0) { %>
+          <% supplies.forEach(function(supply) { %>
+          <tr>
+            <td><%= supply.name %></td>
+            <td><%= supply.quantity_used%></td>
+            <td><%= supply.rate %></td>
+            <td><%= supply.total_price %></td>
+          </tr>
+        <% }); %>
+        <% } else { %>
+          <tr>
+          <td colspan="4">No supplies found for this event</td>
+          </tr>
+        <% } %>
+      </table>
+  
+
+     <!-- Display final price -->
+     <h2>Prix Final</h2>
+     <p><strong>Montant Total : <span id="totalAmount">€<%= calculateTotalAmount(supplies) %></strong></span></p>
+    <label for="discountInput"></label>
+    <input type="number" id="discountInput" placeholder="Entrez le montant de la réduction.">
+    <button id="applyDiscountButton">Appliquer la réduction.</button>
+
+    <p><strong>Montant Net : <span id="netAmount">€<%= calculateTotalAmount(supplies) %></strong></span></p>
+
+    
+
+<button id="finalizeButton" data-event-id="<%= event.id %>" >Finaliser l'achat</button>
+</div>
+
+
+
+<script>
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+
+  const totalAmountElement = document.getElementById('totalAmount');
+  const netAmountElement = document.getElementById('netAmount');
+  const discountInput = document.getElementById('discountInput');
+  const applyDiscountButton = document.getElementById('applyDiscountButton');
+  const finalizeButton = document.getElementById("finalizeButton");
+  const eventId = finalizeButton.dataset.eventId;
+  
+  applyDiscountButton.addEventListener('click', () => {
+    const discountAmount = parseFloat(discountInput.value);
+    const totalAmount = parseFloat(totalAmountElement.textContent);
+    const netAmount = totalAmount - discountAmount;
+    
+    document.getElementById("netAmount").textContent = netAmount;
+  });
+
+
+
+finalizeButton.addEventListener("click", () => {
+  const discountAmount = parseFloat(document.getElementById("discountInput").value);
+  const billUrl = `/bill/${eventId}?discountAmount=${discountAmount}`;
+  
+  // Send a request to the server to save the discount amount in the database
+  fetch('/saveDiscount', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ eventId, discountAmount }),
+  })
+  .then(response => {
+    if (response.ok) {
+      // If the discount amount is successfully saved, open the bill page and print
+      const newWindow = window.open(billUrl);
+      newWindow.onload = function () {
+        newWindow.print();
+      // After printing, send a request to update the billPrinted status
+      fetch('/saveBillPrinted', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ eventId }),
+        });
+      };
+    } else {
+      // Handle error case
+      console.error('Error saving discount amount');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+
+
+  </script>
+
+  
+  
+
+
+<a class="go-back-link" href="javascript:history.back()">Retour</a>
+</body>
+</html>

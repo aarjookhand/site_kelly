@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Supply</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.936);
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.865);
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+      width: 400px;
+      z-index: 2;
+      position: relative;
+    }
+
+    h1 {
+      
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;
+    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:60px;
+      z-index: 1; /* Ensure the h1 overlays the image */
+    }
+  
+    h4 {
+      text-align: center;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    form label {
+        display: block;
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"],
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-sizing: border-box; /* Include padding and border in the width */
+    }
+
+
+    button[type="submit"] {
+      
+      background-color: #000000;
+      color: #fff;
+      width: 100%;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #06060698;
+    }
+
+    .go-back-link {
+      text-align: center;
+        font-size: 14px;
+        color: #888;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .go-back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="welcome-heading">Bienvenue à Fest'Event.</h1>
+  <h4>Modifiez votre liste de clients existante.</h4>
+  <form method="POST" action="/client/update/<%= clientId %>">
+    <div class="content">
+    <label for="firstName">Prénom :</label>
+    <input type="text" id="firstname" name="fisrtname" value="<%= client.firstname %>">
+
+    <label for="lastName">Nom de famille :</label>
+    <input type="text" id="lastname" name="description" value="<%= client.lastname %>">
+
+    <label for="address">Adresse :</label>
+    <input type="text" id="address" name="address" value="<%= client.address %>">
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" value="<%= client.email %>">
+
+    <label for="contact_number">Numéro de contact :</label>
+    <input type="text" id="contact_number" name="contact_number" value="<%= client.contact_number %>">
+
+    <button type="submit">Enregistrer les modifications</button>
+  </div>
+  </form>
+  <div class="go-back-link">
+    <a class="go-back-link" href="/clients">Retour.</a>
+    </div>
+</div>
+ 
+</body>
+</html>

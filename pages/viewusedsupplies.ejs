@@ -1,0 +1,104 @@
+<!-- viewusedsupplies.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Supplies Used</title>
+ <style>
+
+    .welcome-heading {
+      text-align: center;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size: 36px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #000000b7;
+      border: 2px solid #052703;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .supply-card {
+      display: flex;
+      width: 50%; /* Adjust width as needed */
+      margin-bottom: 20px; /* Add spacing between supplies */
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .supply-image {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .supply-info {
+    flex: 2;
+  }
+  
+  /* Style for the displayed images */
+  .image-container {
+    max-width: 100%; /* Set the maximum width */
+    max-height: 200px; /* Set the maximum height */
+    overflow: hidden; /* Hide overflowing parts */
+  }
+  .image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+  }
+
+
+
+
+ </style>
+</head>
+<body>
+  
+    <h1 class="welcome-heading">Bienvenue à Fest'Event.</h1>
+    <h1>Supplies Used for Event</h1>
+
+    <div class="container">
+    <% suppliesUsed.forEach(function(supplyUsed) { %>
+      <div class="supply-card">
+        <div class="supply-image">
+          <% const supplyImages = images.filter(img => img.supply_id === supplyUsed.id); %>
+          <% if (supplyImages.length > 0) { %>
+            <div class="image-container">
+              <a href="/displaySupplyImages/<%= supplyUsed.id %>">
+                <img src="data:image/jpeg;base64, <%= supplyImages[0].image_data.toString('base64') %>" alt="Image">
+              </a>
+            </div>
+          <% } else { %>
+            <div class="image-container">
+              No image available
+            </div>
+          <% } %>
+        </div>
+        <div class="supply-info">
+          <h3><%= supplyUsed.name %></h3>
+          <p><%= supplyUsed.description %></p>
+          <p>Category: <%= supplyUsed.category %></p>
+          <p>Sub Category: <%= supplyUsed.sub_category %></p>
+          <p>Location: <%= supplyUsed.country %>, <%= supplyUsed.city %></p>
+          <p>Quantity Used: <%= supplyUsed.quantity_used %></p>
+          <p>Total Rate: <%= supplyUsed.total_rate %></p>
+          <p>Total Cost: <%= supplyUsed.total_cost %></p>
+        </div>
+      </div>
+    <% }); %>
+
+    <button class="go-back-button" onclick="goBack()">Go Back</button>
+  </div>
+  
+  </div>
+  <script>
+     function goBack() {
+      window.history.back();
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registered Clients</title>
+ <style>
+   body {
+      font-family:  Times, Times New Roman, serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('images/bg1.jpg'); /* Replace with your top image */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center top;
+      min-height: 100vh;
+      position: relative; /* Added relative positioning to the body */
+    }
+
+    .content {
+      background-color: rgba(255, 255, 255, 0.662); /* Adjust the background color and opacity */
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 200px auto 20px; /* Adjust top margin to create space below the top text */
+      width: 90%;
+      max-width: 1200px;
+    }
+   
+
+    .h1-overlay {
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:70px;
+      z-index: 1; /* Ensure the h1 overlays the image */
+    }
+    
+    form {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+   
+    button[type="submit"]
+     {
+    background-color: #000000;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #000000d9;
+    }
+
+    .button-link {
+      text-decoration: none;
+      color: #000000;
+      border: 1px solid #000000;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .button-link:hover {
+      background-color: #00000076;
+    }
+
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .clients th {
+    font-family:  Georgia, 'Times New Roman', Times, serif;
+ 
+    }
+
+    .back-to-login {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .back-to-login a {
+      text-decoration: none;
+      color: #000000;
+      border: 1px solid #000000;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .back-to-login a:hover {
+      background-color: #00000075;
+      color: #fff;
+    }
+    
+
+   
+
+/* Style for the pop-up form overlay */
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+
+/* Styling for the form container */
+.form-container {
+  background-color: #f9f9f9; /* Light gray background */
+  padding: 50px;  
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+  /* Styles for the close button */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000000;
+  }
+
+  /* Style for the form header */
+  #addFormContainer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+ /* Center-align form labels */
+#addFormContainer label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin: 15px auto; /* Center the labels horizontally */
+  text-align: left; /* Left-align label text */
+}
+
+/* Center-align form inputs */
+#addFormContainer input[type="text"],
+#addFormContainer input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 auto 20px; /* Center the inputs horizontally and create some space below */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+/* Center-align submit button */
+#addFormContainer button[type="submit"] {
+  background-color: #000000;
+  color: #fff;
+  width: 50%; /* Adjust button width as needed */
+  margin: 0 auto; /* Center the button horizontally */
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Style for the submit button on hover */
+#addFormContainer button[type="submit"]:hover {
+  background-color: #06060698;
+}
+
+
+ </style>
+  <script>
+    function openAddForm() {
+      document.getElementById("addFormOverlay").style.display = "block";
+    }
+
+    function closeAddForm() {
+      document.getElementById("addFormOverlay").style.display = "none";
+    }
+
+    function openEditForm(clientId) {
+    document.getElementById("editFormOverlay").style.display = "block";
+    }
+
+      function closeEditForm() {
+        document.getElementById("editFormOverlay").style.display = "none";
+      }
+  </script>
+</head>
+<body>
+  <div class="h1-overlay">Bienvenue à Fest'Event.</div>
+  
+  <div class="content">
+  <h1>Nos Clients</h1>
+
+  <form method="GET" action="/clients" class="search-form">
+    <input type="text" name="searchInput" placeholder="Search here" value="<%= searchInput %>">
+    <button type="submit">Recherche</button>
+  </form>
+
+  <table class="clients">
+    <tr>
+      <th>Prénom</th>
+      <th>Nom de famille</th>
+      <th>Adresse</th>
+      <th>Email</th>
+      <th>Numéro de contact</th>
+      <th>Action</th>
+    </tr>
+    <% clients.forEach(function(client) { %>
+      <tr>
+        <td><%= client.firstname %></td>
+        <td><%= client.lastname %></td>
+        <td><%= client.address %></td>
+        <td><%= client.email %></td>
+        <td><%= client.contact_number %></td>
+        <td><a class="button-link" type="submit" href="/client/history/<%= client.id %>">Voir</a>
+        <a class="button-link" type="submit" href="/client/edit/<%= client.id %>">Modifier</a>
+      </td>     
+      </tr>
+    <% }); %>
+  </table>
+  <button onclick="openAddForm()" type="submit">Enregistrer de nouveaux clients</button>
+  </div>
+
+
+  <div id="addFormOverlay" class="form-overlay" style="display: none;">
+    <div class="form-container">
+      <span class="close-button" onclick="closeAddForm()">&times;</span>
+      <h2>Enregistrer de nouveaux clients</h2>
+      <form method="POST" action="/registerClient">
+        <div>       
+        <label for="firstName">Prénom :</label><br>
+        <input type="text" id="firstName" name="firstName" required><br>
+        
+        <label for="lastName">Nom de famille :</label><br>
+        <input type="text" id="lastName" name="lastName" required><br>
+        
+
+        <label for="address">Adresse :</label><br>
+        <input type="text" id="address" name="address" required><br>
+        
+        <label for="email">Email :</label><br>
+        <input type="email" id="email" name="email" required><br>
+        
+        
+        <label for="contactNumber">Numéro de contact :</label><br>
+        <input type="text" id="contactNumber" name="contactNumber" required><br>
+        
+        <p><button type="submit">Enregistrer </button></p>
+      </div>
+     
+    
+      </form>
+      </div>
+
+   
+  </div>
+  <div class="back-to-login">
+    <a href="/login">Retour à la page de connexion</a>
+  </div>
+</body>
+</html>

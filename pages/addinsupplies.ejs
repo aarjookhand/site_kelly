@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fest'Event Supplies</title>
+  <style>
+  h1 {
+      
+      text-align: center;
+      color: #000000;
+      padding: 20px 0;
+    
+      margin: 0;
+      font-family: "Brush Script MT", "Brush Script Std", cursive;
+      font-size:60px;
+      z-index: 1;
+    }
+  
+    h4 {
+      text-align: center;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 30px;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .supply-card {
+      display: flex;
+      width: 50%; 
+      margin-bottom: 20px; 
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .supply-image {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .supply-info {
+    flex: 2;
+  }
+  
+  /* Style for the displayed images */
+  .image-container {
+    max-width: 100%; 
+    max-height: 200px; 
+    overflow: hidden; 
+  }
+  .image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+  }
+
+  /* Style for the search container */
+.search-container {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  text-align: center; 
+  margin-top: 20px; 
+}
+
+/* Style for the spacer div */
+.spacer {
+  height: 20px; 
+}
+
+/* Style for the search forms */
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; 
+}
+
+.search-form label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.search-form input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 300px;
+}
+
+.search-form input[type="submit"] {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Style for the second search form (refine search) */
+.search-form:nth-child(2) {
+  margin-top: 0; 
+  margin-left: 10px; 
+}
+
+.go-back-link {
+      display: block;
+   
+      font-size: 20px;
+      color: #000000;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+    
+    .go-back-link:hover {
+      text-decoration: underline;
+    }
+    
+    
+    
+
+  </style>
+
+</head>
+<body>
+  <h1 class="welcome-heading">Bienvenue à Fest'Event.</h1>
+  <% if (event) { %>
+    <h4>toutes les fournitures</h4>
+  <% } %>
+
+   <div class="search-container">
+   <form class="search-form" action="/addinsupplies/<%= event.id %>" method="get">
+  
+    <input type="text" id="search" name="search" value="<%= searchTerm %>" placeholder="Rechercher par lieu">
+    <input type="submit" value="Rechercher"> 
+    </form>
+    <div class="spacer"></div>
+
+ 
+  <form class="search-form" action="/addinsupplies/<%= event.id %>/refine" method="get">
+
+    <input type="text" id="refineSearch" name="refineSearchTerm" value="<%= refineSearchTerm %>" placeholder="Affiner la recherche ">
+ 
+    <input type="hidden" name="search" value="<%= searchTerm %>">
+    <input type="submit" value="Affiner ">
+  </form>
+  </form>
+  </div>
+
+
+  <form action="/addinsupplies/<%= event.id %>/addSupplies" method="post">
+    <div class="container">
+      <% supplies.forEach(supply => { %>
+        <div class="supply-card">
+          <div class="supply-image">
+            <% const supplyImages = images.filter(img => img.supply_id === supply.id); %>
+            <% if (supplyImages.length > 0) { %>
+              <div class="image-container">
+                <a href="/displaySupplyImages/<%= supply.id %>">
+                  <img src="data:image/jpeg;base64, <%= supplyImages[0].image_data.toString('base64') %>" alt="Image">
+                </a>
+              </div>
+            <% } else { %>
+              <div class="image-container">
+                No image available
+              </div>
+            <% } %>
+          </div>
+          <div class="supply-info">
+            <h3><%= supply.name %></h3>
+            <p><%= supply.description %></p>
+            <p>Category: <%= supply.category %></p>
+            <p>Sub Category: <%= supply.sub_category %></p>
+            <p>Location: <%= supply.country %>, <%= supply.city %></p>
+            <p>Quantity: <%= supply.quantity %></p>
+            <p>Rate: <%= supply.rate %></p>
+            <input type="number" name="quantity<%= supply.id %>" value="0" min="0">
+            <input type="checkbox" name="selectedSupplies" value="<%= supply.id %>">
+          </div>
+          
+        </div>
+       
+      <% }); %>
+      
+  
+
+    </div>
+    <input type="submit" value="Confirm Selection">
+    
+    
+  </form>
+  <a class="go-back-link" href="javascript:history.back()">Retour</a>
+  <script>
+    let currentImageIndex = 0;
+  
+    function showImage(index) {
+      const images = document.querySelectorAll(".image-container");
+      const imageNumber = document.querySelector(".image-number");
+  
+      images[currentImageIndex].style.display = "none";
+      currentImageIndex = (index + images.length) % images.length;
+      images[currentImageIndex].style.display = "block";
+  
+      imageNumber.textContent = `${currentImageIndex + 1} / ${images.length}`;
+    }
+  
+    function changeImage(n) {
+      showImage(currentImageIndex + n);
+    }
+  
+    // Show the first image by default
+    showImage(currentImageIndex);
+
+
+ 
+  function openPopup(supplyId) {
+    const modal = document.getElementById("myModal");
+    const modalContent = document.getElementById("modal-content");
+    modal.style.display = "block";
+
+    // Fetch the content of displaySupplyImages.ejs using AJAX
+    fetch(`/displaySupplyImages/${supplyId}`)
+      .then(response => response.text())
+      .then(data => {
+        modalContent.innerHTML = data;
+        // Initialize the slideshow inside the modal content
+        initSlideshow();
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  function closePopup() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "none";
+    const modalContent = document.getElementById("modal-content");
+    modalContent.innerHTML = "";
+  }
+
+  // Initialize the slideshow inside the modal content
+  function initSlideshow() {
+    let currentImageIndex = 0;
+
+    function showImage(index) {
+      const images = document.querySelectorAll(".image-container");
+      const imageNumber = document.querySelector(".image-number");
+
+      images[currentImageIndex].style.display = "none";
+      currentImageIndex = (index + images.length) % images.length;
+      images[currentImageIndex].style.display = "block";
+
+      imageNumber.textContent = `${currentImageIndex + 1} / ${images.length}`;
+    }
+
+    function changeImage(n) {
+      showImage(currentImageIndex + n);
+    }
+
+    // Show the first image by default
+    showImage(currentImageIndex);
+
+    // Attach event listeners to the slideshow controls
+    const prevButton = document.querySelector(".prev");
+    const nextButton = document.querySelector(".next");
+
+    prevButton.addEventListener("click", () => {
+      changeImage(-1);
+    });
+
+    nextButton.addEventListener("click", () => {
+      changeImage(1);
+    });
+  }
+</script>
+
+
+
+</body>
+</html>
